@@ -15,7 +15,10 @@ const validatePostBody = (req, res, next) => {
       (typeof price == "string" || typeof price == "number") &&
       /^\d+(\.\d+)?$/.test(price)
     ) ||
-    !(typeof thumbnail == "string" && /\w+/.test(thumbnail))
+    !(
+      typeof thumbnail == "string" &&
+      /^(ftp|http|https):\/\/[^ "]+$/.test(thumbnail)
+    )
   )
     res.json({ error: "Los valores enviados no son válidos" });
   else {
@@ -28,7 +31,7 @@ const validatePostBody = (req, res, next) => {
 };
 
 const validatePutBody = (req, res, next) => {
-  const { title, price, thumbnail } = req.body;
+  let { title, price, thumbnail } = req.body;
   if (
     (title !== undefined && !(typeof title == "string" && /\w+/.test(title))) ||
     (price !== undefined &&
@@ -37,13 +40,17 @@ const validatePutBody = (req, res, next) => {
         /^\d+(\.\d+)?$/.test(price)
       )) ||
     (thumbnail !== undefined &&
-      !(typeof thumbnail == "string" && /\w+/.test(thumbnail)))
+      !(
+        typeof thumbnail == "string" &&
+        /^(ftp|http|https):\/\/[^ "]+$/.test(thumbnail)
+      ))
   )
     res.json({ error: "Los valores enviados no son válidos" });
   else {
-    req.body.title = title?.trim();
-    req.body.rice = price && Math.round(parseFloat(price) * 100) / 100;
-    req.body.thumbnail = thumbnail?.trim();
+    title = title?.trim();
+    price = price && Math.round(parseFloat(price) * 100) / 100;
+    thumbnail = thumbnail?.trim();
+    req.body = { ...req.body, title, price, thumbnail };
     next();
   }
 };

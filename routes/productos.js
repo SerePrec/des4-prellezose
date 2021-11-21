@@ -14,39 +14,13 @@ router.get("/", async (req, res) => {
     });
   }
 });
-/* router.post("/", async (req, res) => {
-  try {
-    let { title, price, thumbnail } = req.body;
-    if (
-      !(typeof title == "string" && /\w+/.test(title)) ||
-      !(
-        (typeof price == "string" || typeof price == "number") &&
-        /^\d+(\.\d+)?$/.test(price)
-      ) ||
-      !(typeof thumbnail == "string" && /\w+/.test(thumbnail))
-    )
-      res.json({ error: "Los valores enviados no son válidos" });
-    else {
-      title = title.trim();
-      price = Math.round(parseFloat(price) * 100) / 100;
-      thumbnail = thumbnail.trim();
-      const newProduct = { title, price, thumbnail };
-      const id = await productos.save(newProduct);
-      res.json({ id, ...newProduct });
-    }
-  } catch (error) {
-    error.contenedor || console.log(error);
-    res.status(500).json({
-      error: "No se pudo agregar el producto"
-    });
-  }
-}); */
+
 router.post("/", validateData.validatePostBody, async (req, res) => {
   try {
     let { title, price, thumbnail } = req.body;
-    const newProduct = { title, price, thumbnail };
-    const id = await productos.save(newProduct);
-    res.json({ id, ...newProduct });
+    let newProduct = { title, price, thumbnail };
+    newProduct = await productos.save(newProduct);
+    res.json(newProduct);
   } catch (error) {
     error.contenedor || console.log(error);
     res.status(500).json({
@@ -54,24 +28,7 @@ router.post("/", validateData.validatePostBody, async (req, res) => {
     });
   }
 });
-/* router.get("/:id", async (req, res) => {
-  try {
-    let id = req.params.id;
-    if (isNaN(id)) res.json({ error: "El parámetro no es válido" });
-    else {
-      id = parseInt(id);
-      const producto = await productos.getById(id);
-      producto !== null
-        ? res.json(producto)
-        : res.json({ error: "Producto no encontrado" });
-    }
-  } catch (error) {
-    error.contenedor || console.log(error);
-    res.status(500).json({
-      error: "No se pudo recuperar la infomación"
-    });
-  }
-}); */
+
 router.get("/:id", validateData.validateId, async (req, res) => {
   try {
     const producto = await productos.getById(req.params.id);
@@ -85,41 +42,7 @@ router.get("/:id", validateData.validateId, async (req, res) => {
     });
   }
 });
-/* router.put("/:id", async (req, res) => {
-  try {
-    let id = req.params.id;
-    if (isNaN(id)) return res.json({ error: "El parámetro no es válido" });
-    let { title, price, thumbnail } = req.body;
-    if (
-      (title !== undefined &&
-        !(typeof title == "string" && /\w+/.test(title))) ||
-      (price !== undefined &&
-        !(
-          (typeof price == "string" || typeof price == "number") &&
-          /^\d+(\.\d+)?$/.test(price)
-        )) ||
-      (thumbnail !== undefined &&
-        !(typeof thumbnail == "string" && /\w+/.test(thumbnail)))
-    )
-      res.json({ error: "Los valores enviados no son válidos" });
-    else {
-      id = parseInt(id);
-      title = title?.trim();
-      price = price && Math.round(parseFloat(price) * 100) / 100;
-      thumbnail = thumbnail?.trim();
-      let updateProduct = { title, price, thumbnail };
-      updateProduct = await productos.updateById(id, updateProduct);
-      updateProduct !== null
-        ? res.json(updateProduct)
-        : res.json({ error: "Producto no encontrado" });
-    }
-  } catch (error) {
-    error.contenedor || console.log(error);
-    res.status(500).json({
-      error: "No se pudo actualizar el producto"
-    });
-  }
-}); */
+
 router.put(
   "/:id",
   validateData.validateId,
@@ -141,5 +64,19 @@ router.put(
     }
   }
 );
+
+router.delete("/:id", validateData.validateId, async (req, res) => {
+  try {
+    const deletedId = await productos.deleteById(req.params.id);
+    deletedId !== null
+      ? res.json({ borrado: "ok", deletedId })
+      : res.json({ error: "Producto no encontrado" });
+  } catch (error) {
+    error.contenedor || console.log(error);
+    res.status(500).json({
+      error: "No se pudo recuperar la infomación"
+    });
+  }
+});
 
 module.exports = router;

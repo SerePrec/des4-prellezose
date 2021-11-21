@@ -43,7 +43,7 @@ class Contenedor {
       );
       this.nextId++;
       console.log("Elemento guardado con éxito");
-      return id;
+      return producto;
     } catch (error) {
       console.log("Error al guardar el elemento", error);
       error.contenedor = true;
@@ -91,7 +91,6 @@ class Contenedor {
         const newContent = content.map(elem =>
           elem.id !== id ? elem : newProducto
         );
-        console.log(newContent);
         await fs.writeFile(
           `./${this.filename}`,
           JSON.stringify(newContent, null, 2)
