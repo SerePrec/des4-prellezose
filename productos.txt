@@ -1,32 +1,38 @@
 [
   {
     "id": 1,
-    "title": "Escuadra",
-    "price": 123.45,
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png"
+    "title": "1 modif",
+    "price": 100,
+    "thumbnail": "1 modif"
   },
   {
     "id": 2,
-    "title": "Calculadora",
-    "price": 234.56,
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png"
+    "title": "a",
+    "price": 122,
+    "thumbnail": "a"
   },
   {
     "id": 3,
-    "title": "Globo Terráqueo",
-    "price": 345.67,
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png"
+    "title": "a modif",
+    "price": 100,
+    "thumbnail": "modif"
   },
   {
     "id": 4,
-    "title": "Microscopio",
-    "price": 9723.29,
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-science-vol-2-1/512/microscope_bacteria_virus_science-256.png"
+    "title": "4 modif",
+    "price": 100,
+    "thumbnail": "4 modif"
   },
   {
     "id": 5,
-    "title": "Telescopio refractor",
-    "price": 13295.43,
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-science-vol-2-1/512/astronomy_telescope_moon_education-256.png"
+    "title": "1",
+    "price": 1,
+    "thumbnail": "1"
+  },
+  {
+    "id": 6,
+    "title": "prueba",
+    "price": 223.32,
+    "thumbnail": "dfdffd"
   }
 ]

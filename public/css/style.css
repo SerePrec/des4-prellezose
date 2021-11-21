@@ -1,0 +1,16 @@
+body {
+  width: 50%;
+  margin: auto;
+}
+h2 {
+  margin-top: 2rem;
+  text-align: center;
+}
+form {
+  margin-top: 1rem;
+}
+
+form button[type="submit"] {
+  display: block;
+  margin: auto;
+}

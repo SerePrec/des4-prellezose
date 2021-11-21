@@ -1,4 +1,4 @@
-const Contenedor = require("../model/contenedor");
+const Contenedor = require("../models/contenedor");
 
 async function cargaInicial() {
   try {
