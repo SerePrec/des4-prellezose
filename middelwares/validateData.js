@@ -46,6 +46,8 @@ const validatePutBody = (req, res, next) => {
       ))
   )
     res.json({ error: "Los valores enviados no son válidos" });
+  else if (title === undefined && price === undefined && thumbnail == undefined)
+    res.json({ error: "No hay campos válidos para actualizar" });
   else {
     title = title?.trim();
     price = price && Math.round(parseFloat(price) * 100) / 100;
