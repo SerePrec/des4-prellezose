@@ -1,6 +1,6 @@
 const validateId = (req, res, next) => {
   const id = req.params.id;
-  if (isNaN(id)) res.json({ error: "El parámetro no es válido" });
+  if (isNaN(id)) res.status(400).json({ error: "El parámetro no es válido" });
   else {
     req.params.id = parseInt(id);
     next();
@@ -20,7 +20,7 @@ const validatePostBody = (req, res, next) => {
       /^(ftp|http|https):\/\/[^ "]+$/.test(thumbnail)
     )
   )
-    res.json({ error: "Los valores enviados no son válidos" });
+    res.status(400).json({ error: "Los valores enviados no son válidos" });
   else {
     title = title.trim();
     price = Math.round(parseFloat(price) * 100) / 100;
@@ -45,9 +45,9 @@ const validatePutBody = (req, res, next) => {
         /^(ftp|http|https):\/\/[^ "]+$/.test(thumbnail)
       ))
   )
-    res.json({ error: "Los valores enviados no son válidos" });
+    res.status(400).json({ error: "Los valores enviados no son válidos" });
   else if (title === undefined && price === undefined && thumbnail == undefined)
-    res.json({ error: "No hay campos válidos para actualizar" });
+    res.status(400).json({ error: "No hay campos válidos para actualizar" });
   else {
     title = title?.trim();
     price = price && Math.round(parseFloat(price) * 100) / 100;

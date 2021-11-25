@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
     const lista = await productos.getAll();
     res.json(lista);
   } catch (error) {
-    error.contenedor || console.log(error);
+    console.log(error);
     res.status(500).json({
       error: "No se pudo recuperar la infomación"
     });
@@ -20,9 +20,9 @@ router.post("/", validateData.validatePostBody, async (req, res) => {
     let { title, price, thumbnail } = req.body;
     let newProduct = { title, price, thumbnail };
     newProduct = await productos.save(newProduct);
-    res.json(newProduct);
+    res.json({ result: "ok", newProduct });
   } catch (error) {
-    error.contenedor || console.log(error);
+    console.log(error);
     res.status(500).json({
       error: "No se pudo agregar el producto"
     });
@@ -36,7 +36,7 @@ router.get("/:id", validateData.validateId, async (req, res) => {
       ? res.json(producto)
       : res.json({ error: "Producto no encontrado" });
   } catch (error) {
-    error.contenedor || console.log(error);
+    console.log(error);
     res.status(500).json({
       error: "No se pudo recuperar la infomación"
     });
@@ -54,10 +54,10 @@ router.put(
       let updateProduct = { title, price, thumbnail };
       updateProduct = await productos.updateById(id, updateProduct);
       updateProduct !== null
-        ? res.json(updateProduct)
+        ? res.json({ result: "ok", updateProduct })
         : res.json({ error: "Producto no encontrado" });
     } catch (error) {
-      error.contenedor || console.log(error);
+      console.log(error);
       res.status(500).json({
         error: "No se pudo actualizar el producto"
       });
@@ -69,12 +69,12 @@ router.delete("/:id", validateData.validateId, async (req, res) => {
   try {
     const deletedId = await productos.deleteById(req.params.id);
     deletedId !== null
-      ? res.json({ borrado: "ok", deletedId })
+      ? res.json({ result: "ok", deletedId })
       : res.json({ error: "Producto no encontrado" });
   } catch (error) {
-    error.contenedor || console.log(error);
+    console.log(error);
     res.status(500).json({
-      error: "No se pudo recuperar la infomación"
+      error: "No se pudo eliminar el producto"
     });
   }
 });

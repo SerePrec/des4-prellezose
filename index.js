@@ -3,7 +3,11 @@ const PORT = process.env.PORT || 8080;
 
 async function startServer() {
   //Inicializo mi "storage"
-  await require("./models/productos").init();
+  try {
+    await require("./models/productos").init();
+  } catch (error) {
+    console.log(error);
+  }
 
   const server = app.listen(PORT, () =>
     console.log(
